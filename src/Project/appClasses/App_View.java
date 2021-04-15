@@ -15,6 +15,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -48,6 +49,8 @@ public class App_View extends View<App_Model> {
 	    protected VBox center, centerContact, centerGroup;
 	    protected MenuBar menuBar;
 	    protected ImageView searchIcon;
+	    
+	   // protected static Image SEARCHICON = new Image("link");
 		
 	    
 	    
@@ -114,7 +117,7 @@ public class App_View extends View<App_Model> {
 			   this.searchButton = new Button("search");
 			   this.searchButton.getStyleClass().add("searchButton");
 			   
-			   
+			   //this.searchIcon = new ImageView(SEARCHICON);
 			   //this.searchButton.setGraphic(this.searchIcon);
 			   //this.searchIcon.setFitHeight(25);
 			   //this.searchIcon.setFitWidth(25);
