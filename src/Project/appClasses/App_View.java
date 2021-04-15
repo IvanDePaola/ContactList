@@ -50,7 +50,7 @@ public class App_View extends View<App_Model> {
 	    protected MenuBar menuBar;
 	    protected ImageView searchIcon;
 	    
-	   // protected static Image SEARCHICON = new Image("link");
+	   // protected static Image SEARCHICON = new Image("");
 		
 	    
 	    
