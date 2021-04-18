@@ -4,6 +4,7 @@ import java.util.TreeSet;
 
 import Project.ServiceLocator;
 import Project.abstractClasses.Model;
+import javafx.scene.image.ImageView;
 
 /**
  * Copyright 2015, FHNW, Prof. Dr. Brad Richards. All rights reserved. This code
@@ -28,7 +29,7 @@ public class App_Model extends Model {
     
     
     public void fillSet() {
-    	this.treeContacts.add(new Contact("F", "L", 000, "x.x" ));
+    	this.treeContacts.add(new Contact( "F", "L", 000, "x.x" ));
     	
     }
     

@@ -2,21 +2,36 @@ package Project.appClasses;
 
 import java.util.ArrayList;
 
+import javafx.scene.image.ImageView;
+
 public class Contact implements Comparable<Contact> {
 	
 	//define attributes
 	private String firstName;
 	private String lastName;
 	
+	
+
+	
 	private int phoneNumber;
 	private String eMail;
 	
-	public Contact(String firstName, String lastName, int i, String string) {
+	public Contact( String firstName, String lastName, int i, String string) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = i;
 		this.eMail = string;
 	}
+	
+
+	/*public ImageView getprofilePicture() {
+		return this.profilePicture;
+	}
+	
+	public void setImageView (ImageView profilePicture) {
+		this.profilePicture = profilePicture;
+	}*/
+	
 	public String getfirstName() {
 		return this.firstName;
 	}

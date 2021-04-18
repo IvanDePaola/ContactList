@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import Project.ServiceLocator;
 import Project.abstractClasses.View;
 import Project.commonClasses.Translator;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import junit.framework.Test;
 
 /**
  * Copyright 2015, FHNW, Prof. Dr. Brad Richards. All rights reserved. This code
@@ -35,11 +38,12 @@ public class App_View extends View<App_Model> {
 	//behälter definieren
 		protected Menu menuFile, menuFileLanguage, menuHelp;
 	    Label lblNumber;
-	    Button btnClick, plusButton, searchButton, groupButton;
+	    Button btnClick, plusButton, searchButton, groupButton, newViewButton;
 	    
 
 	    //Borderpane as root definieren
 	    protected BorderPane root;
+	    protected BorderPane root2;
 	    
 	    protected ListView<Contact> contactList;
 	    
@@ -48,9 +52,9 @@ public class App_View extends View<App_Model> {
 	    protected TextField searchField;
 	    protected VBox center, centerContact, centerGroup;
 	    protected MenuBar menuBar;
-	    protected ImageView searchIcon;
+	    public ImageView searchIcon;
 	    
-	   // protected static Image SEARCHICON = new Image("");
+	   public static Image SEARCHICON = new Image("Profilbild.jpg");
 		
 	    
 	    
@@ -58,6 +62,7 @@ public class App_View extends View<App_Model> {
 	        super(stage, model);
 	        ServiceLocator.getServiceLocator().getLogger().info("Application view initialized");
 	    }
+		
 
 		@Override //template method -- add everything in the GUI
 		protected Scene create_GUI() {
@@ -71,7 +76,7 @@ public class App_View extends View<App_Model> {
 		    menuFile.getItems().add(menuFileLanguage);
 		    
 		   
-		    this.root = new BorderPane();	    
+		    this.root = new BorderPane();
 		    
 		    //template for the language options
 	       for (Locale locale : sl.getLocales()) {
@@ -94,6 +99,9 @@ public class App_View extends View<App_Model> {
 	       	    }
 	           
 	           
+	        //Add new newViewButton
+	          this.newViewButton = new Button ("Neues Fenster öffnen"); 
+	           
 	        //add new contactbutton
 	           
 	           this.plusButton = new Button("plus");
@@ -104,7 +112,7 @@ public class App_View extends View<App_Model> {
 	       //HBox containing buttons
 	           this.buttonBox = new HBox();
 			   
-			   this.buttonBox.getChildren().addAll(this.groupButton, this.plusButton);
+			   this.buttonBox.getChildren().addAll(this.groupButton, this.plusButton, this.newViewButton);
 			   
 			 //define search bar
 			   this.searchBar = new HBox();
@@ -117,15 +125,9 @@ public class App_View extends View<App_Model> {
 			   this.searchButton = new Button("search");
 			   this.searchButton.getStyleClass().add("searchButton");
 			   
-			   //this.searchIcon = new ImageView(SEARCHICON);
-			   //this.searchButton.setGraphic(this.searchIcon);
-			   //this.searchIcon.setFitHeight(25);
-			   //this.searchIcon.setFitWidth(25);
 			   
 			   
 			   
-			   this.searchBar.getChildren().addAll(this.searchField, this.searchButton);
-			   HBox.setHgrow(this.searchField, Priority.ALWAYS);
 			   
 			   
 			   //VBox Center wird gefüllt
@@ -140,6 +142,7 @@ public class App_View extends View<App_Model> {
 			   this.bottom.getChildren().addAll(this.buttonBox);
 			   this.root.setBottom(this.bottom);
 			   
+
 			   
 			   //TODO: contact view -- save btn, update btn
 	           
@@ -147,6 +150,27 @@ public class App_View extends View<App_Model> {
 		    //rest of template
 	        menuHelp = new Menu();
 		    menuBar.getMenus().addAll(menuFile, menuHelp);
+		    
+		    //zweites Fenster 
+		    
+		    ImageView i = new ImageView ("Profilbild.jpg");
+		    
+		    Label label2 = new Label("Das ist die zweite Szene!");
+			Button button2 = new Button("Zur ersten Szene wechseln");
+			button2.setOnAction(e -> {
+				stage.setScene(scene);
+				stage.show();
+			}
+);
+
+			VBox layout2 = new VBox(10);
+			layout2.getChildren().addAll(label2,i, button2 );
+			Scene scene2 = new Scene(layout2, 350, 350);
+			
+			newViewButton.setOnAction(e -> {
+					stage.setScene(scene2);
+					stage.show();
+			});
 			
 			/*
 			 * GridPane root = new GridPane();
@@ -168,6 +192,12 @@ public class App_View extends View<App_Model> {
 	        scene.getStylesheets().add(
 	                getClass().getResource("app.css").toExternalForm());
 	        return scene;
+	        
+
+
+	        
+	        
+	     
 		}
 		
 		   protected void updateTexts() {
