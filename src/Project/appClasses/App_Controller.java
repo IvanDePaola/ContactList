@@ -1,10 +1,17 @@
 package Project.appClasses;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+
 import Project.ServiceLocator;
 import Project.abstractClasses.Controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
 
 /**
@@ -39,8 +46,277 @@ public class App_Controller extends Controller<App_Model, App_View> {
 	        
 	        serviceLocator = ServiceLocator.getServiceLocator();        
 	        serviceLocator.getLogger().info("Application controller initialized");
+	        
+	        model.readFile();
+	   
+	    
+	        view.contactList.setOnMouseClicked(this::updateContact);
+	        
+	        view.backButton.setOnAction(this::updateBack);
+	        
+	        view.backButtonGroup.setOnAction(this::updateBack);
+	        
+	        view.newButton.setOnAction(this::newContact);
+	        
+	        view.saveAndUpdateButton.setOnAction(arg0 -> {
+				try {
+					saveNewContact(arg0);
+					
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+	        
+	        view.editButton.setOnAction(this::editContact);
+	        
+	        view.groupButton.setOnAction(this::showGroup);
+	        
+	        view.searchGroupButton.setOnAction(this::searchGroup);
+	        
+	        view.groupList.setOnMouseClicked(this::updateContactGroupView);
+	        
+	        view.deleteButton.setOnAction(this::delete);
+	        
+	        view.searchButton.setOnAction(this::search);
+	        
+	        view.updateButton.setOnAction(arg0 -> {
+				try {
+					refreshContact(arg0);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+	        
+	        
+	     
 	    }
 	    
+	    
+	    
+	   
+	    private void showGroup(Event e) {
+	    	view.changeGroupView();
+	    	
+	    	
+	    }
+	    
+
+		private void updateContact(MouseEvent mouseevent1) {
+			view.changeContactView();
+			view.disableTextField();
+			
+			view.updateButton.setDisable(true);
+			view.editButton.setDisable(false);
+			view.deleteButton.setDisable(false);
+			view.deleteButton.setVisible(true);
+			view.saveAndUpdateButton.setDisable(true);
+			view.saveAndUpdateButton.setVisible(false);
+			view.saveAndUpdateButton.setManaged(false);
+			view.editButton.setVisible(true);
+			view.updateButton.setVisible(true);
+			
+			Contact contact = view.contactList.getSelectionModel().getSelectedItem();
+			this.updateView(contact);
+		}
+
+		private void updateContactGroupView(MouseEvent mouseevent1) {
+			view.changeContactView();
+			view.disableTextField();
+			view.saveAndUpdateButton.setDisable(true);
+			view.saveAndUpdateButton.setVisible(false);
+			view.saveAndUpdateButton.setManaged(false);
+			view.updateButton.setDisable(true);
+			view.editButton.setDisable(false);
+			view.deleteButton.setDisable(false);
+			view.deleteButton.setVisible(true);
+			view.editButton.setVisible(true);
+			view.updateButton.setVisible(true);
+			
+			Contact contact = view.groupList.getSelectionModel().getSelectedItem();
+			this.updateView(contact);
+		}
+		
+
+
+		private void updateView(Contact contact) {
+			
+			if (contact != null) {
+				view.txtfirstName.setText(contact.getfirstName());
+				view.txtlastName.setText(contact.getlastName());
+				view.txtEmail.setText(contact.geteMail());
+				view.txtNumber.setText("0"+Integer.toString(contact.getPhoneNumber()));
+				view.comboGroup.setValue(contact.getGroup().name());
+				
+				String birthday = model.formatter.format(contact.getBirthday());
+				LocalDate date = LocalDate.parse(birthday, model.LocalFormatter);
+				view.birthDate.setValue(date);
+				view.txtID.setText(Integer.toString(contact.getID()));
+				
+			} else {
+				view.txtfirstName.setText("");
+				view.txtlastName.setText("");
+				view.txtNumber.setText("");
+				view.txtEmail.setText("");
+				view.comboGroup.setValue(null);
+				view.birthDate.setValue(LocalDate.now());
+				view.txtID.setText("");
+			}
+			
+		}
+
+
+
+		private void updateBack(Event e) {
+			view.backBack();
+			this.updateListView();
+			view.txtSearch.clear();
+		}
+		
+		private void newContact(Event e) {
+			view.changeContactView();
+			view.enableTextField();
+			
+			view.saveAndUpdateButton.setDisable(false);
+			view.saveAndUpdateButton.setVisible(true);
+			view.saveAndUpdateButton.setManaged(true);
+			view.deleteButton.setVisible(false);
+			view.editButton.setVisible(false);
+			view.updateButton.setVisible(false);
+			
+			view.txtID.setDisable(true);
+			this.updateView(null);
+			
+		}
+		
+		//Saving
+		private void saveNewContact(Event e) throws ParseException {
+			String lastName = view.txtlastName.getText();
+			String firstName = view.txtfirstName.getText();
+			
+			String eMail = view.txtEmail.getText();
+			
+			String stringGroup =(view.comboGroup.getSelectionModel().getSelectedItem());
+			Group group = Group.valueOf(stringGroup);
+			
+			String phoneNum = view.txtNumber.getText();
+			int phoneNumber = Integer.parseInt(phoneNum);
+			
+			LocalDate date = view.birthDate.getValue();
+			String dateString = date.format(model.LocalFormatter);
+			Date birthday = model.formatter.parse(dateString);
+			
+			Contact contact = model.createContact(firstName, lastName, eMail, group, birthday, phoneNumber);
+			view.contactList.getItems().add(contact);
+			view.backBack();
+			model.saveContact();
+		}
+		
+		//D
+		private void delete(Event e) {
+			String name = view.txtlastName.getText();
+			Contact contact = model.getSelectedContact(name);
+			
+			model.contactsTree.remove(contact);
+			model.saveContact();
+			
+			this.updateListView();
+			this.updateView(null);
+			view.backBack();
+		}
+		
+		private void updateListView() {
+			view.contactList.getItems().clear();
+			
+			
+			for(Contact c : model.contactsTree) {
+			   	view.contactList.getItems().add(c);
+			    }
+		}
+		
+		//searching
+		private void search(Event e) {
+			String name = view.txtSearch.getText();
+			Contact contact = model.getSelectedContact(name);
+			view.contactList.getItems().clear();
+			
+			view.contactList.getItems().add(contact);
+		}
+		
+		public void searchGroup(Event e) {
+			Group group = view.comboGroup2.getValue();
+			/*
+			String groupString = String.valueOf((view.comboGroup2.getValue()));
+			Group group = Group.valueOf(groupString);
+			
+			if (groupString.equals("Favoriten")) {
+				group = Group.Favourites;
+			}
+			if (groupString.equals("Familie")) {
+				 group = Group.Family;
+			}
+			if (groupString.equals("Arbeit")) {
+				 group = Group.Work;
+			}
+			if (groupString.equals("Favoriten")) {
+				 group = Group.University;
+			}
+			if (groupString.equals("Favoriten")) {
+				 group = Group.Leisure;
+			}
+			if (groupString.equals("Favoriten")) {
+				 group = Group.Other;
+			}else {
+				 group = Group.valueOf(groupString);
+			}*/
+			
+			ArrayList<Contact> arrayGroup = model.getSelectedGroup(group);
+			view.groupList.getItems().clear();
+			
+			for(Contact c : arrayGroup) {
+				view.groupList.getItems().add(c);
+			}
+			
+		}
+		
+
+
+
+
+		//for update btn
+		private void refreshContact(Event e) throws ParseException {
+			String ID = view.txtID.getText();
+			int contactID = Integer.parseInt(ID);
+			Contact contact = model.getSelectedID(contactID);
+			
+			contact.setfirstName(view.txtfirstName.getText());
+			contact.setlastName(view.txtlastName.getText());
+			
+			int phoneNum = Integer.parseInt(view.txtNumber.getText());
+			contact.setPhoneNumber(phoneNum);
+			contact.seteMail(view.txtEmail.getText());
+			
+			LocalDate date = view.birthDate.getValue();
+			System.out.println(date);
+			String dateString = date.format(model.LocalFormatter);
+			System.out.println(dateString);
+			Date birthday = model.formatter.parse(dateString);
+			System.out.println(birthday);
+			contact.setBirthday(birthday);
+			
+			view.disableTextField();
+			view.updateButton.setDisable(true);
+			model.saveContact();
+		}
+		
+		private void editContact(Event e) {
+			view.updateButton.setDisable(false);
+			view.enableTextField();
+		}
+	    
+	    
+	    //template method
 	    public void buttonClick() {
 	        model.incrementValue();
 	        String newText = Integer.toString(model.getValue());        
