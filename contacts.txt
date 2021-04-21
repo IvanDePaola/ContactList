@@ -1,0 +1,2 @@
+Assad;Bims;123123;Favourites;21.04.2021;123123
+TestContact;FromFile;asdf;Favourites;20.04.2021;12341234
