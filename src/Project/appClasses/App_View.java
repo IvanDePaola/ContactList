@@ -170,35 +170,6 @@ public class App_View extends View<App_Model> {
 			   this.root.setCenter(this.center);
 			   
 			   
-
-			   //TODO: contact view -- save btn, update btn
-	           
-	        
-		    //rest of template
-	        menuHelp = new Menu();
-		    menuBar.getMenus().addAll(menuFile, menuHelp);
-		    
-		    //zweites Fenster 
-		    
-		    ImageView profilepicture = new ImageView ("Profilbild.jpg");
-		    
-		    Label label2 = new Label("Das ist die zweite Szene!");
-		    Label name = new Label ("Name: ");
-			Button back = new Button("Back");
-			Button delete = new Button ("delete");
-		back.setOnAction(e -> {
-			stage.setScene(scene);
-			stage.show();
-		});
-		
-		//linke Seite des zweiten Fensters definieren
-		
-		VBox center = new VBox(30);
-		
-		//HBox mit verschiedenen Buttons definieren
-		
-		HBox bottom = new HBox();
-
 		   
 		   //contactView, create new contact , edit, delete, update
 		   
@@ -281,12 +252,14 @@ public class App_View extends View<App_Model> {
 			   //entering text CSS
 
 
+
 			BorderPane layout2 = new BorderPane();
 			Scene scene2 = new Scene(layout2, 350, 350);
-			newViewButton.setOnAction(e -> {
+			/*newViewButton.setOnAction(e -> {
 				stage.setScene(scene2);
 				stage.show();
-		});
+		});*/
+
 
 			   this.txtEmail.getStyleClass().add("txtContactForm");
 			   this.txtlastName.getStyleClass().add("txtContactForm");
@@ -295,16 +268,8 @@ public class App_View extends View<App_Model> {
 			   this.comboGroup.getStyleClass().add("txtContactForm");
 			   this.birthDate.getStyleClass().add("txtBirthDate");
 			   this.txtID.getStyleClass().add("txtID");
-
 			
-			layout2.setTop(menuBar);
-			layout2.setCenter(center);
-			layout2.setBottom(bottom);
-			bottom.getChildren().addAll(back, delete);
-			center.getChildren().add(profilepicture);
-			center.getChildren().add(name);
-			center.getChildren().add(new Label("Email: "));
-			center.getChildren().add(new Label("Telephone: "));
+
 			
 			
 			
@@ -326,6 +291,7 @@ public class App_View extends View<App_Model> {
 	        btnClick.setMinWidth(200);
 	        root.add(btnClick, 0, 2);
 	        */
+
 
 			   
 			   //adding to behälter
@@ -414,7 +380,6 @@ public class App_View extends View<App_Model> {
 			   
 			   
 		      
-
 	        updateTexts();
 			
 	        scene1 = new Scene(root, 450, 750);
