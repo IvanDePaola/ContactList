@@ -28,7 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import junit.framework.Test;
 
 /**
  * Copyright 2015, FHNW, Prof. Dr. Brad Richards. All rights reserved. This code
@@ -251,16 +251,6 @@ public class App_View extends View<App_Model> {
 			   
 			   //entering text CSS
 
-
-
-			BorderPane layout2 = new BorderPane();
-			Scene scene2 = new Scene(layout2, 350, 350);
-			/*newViewButton.setOnAction(e -> {
-				stage.setScene(scene2);
-				stage.show();
-		});*/
-
-
 			   this.txtEmail.getStyleClass().add("txtContactForm");
 			   this.txtlastName.getStyleClass().add("txtContactForm");
 			   this.txtNumber.getStyleClass().add("txtContactForm");
@@ -269,30 +259,6 @@ public class App_View extends View<App_Model> {
 			   this.birthDate.getStyleClass().add("txtBirthDate");
 			   this.txtID.getStyleClass().add("txtID");
 			
-
-			
-			
-			
-			
-			
-
-			
-			/*
-			 * GridPane root = new GridPane();
-			root.add(menuBar, 0, 0);
-			
-			lblNumber = new Label();
-	        lblNumber.setText(Integer.toString(model.getValue()));
-	        lblNumber.setMinWidth(200);
-	        lblNumber.setAlignment(Pos.BASELINE_CENTER);
-	        this.root.add(lblNumber, 0, 1);
-	        
-	        btnClick = new Button();
-	        btnClick.setMinWidth(200);
-	        root.add(btnClick, 0, 2);
-	        */
-
-
 			   
 			   //adding to behälter
 			   listCenter.add(this.lblfirstName, 0, 0);
