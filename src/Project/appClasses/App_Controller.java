@@ -48,4 +48,6 @@ public class App_Controller extends Controller<App_Model, App_View> {
 	        view.lblNumber.setText(newText);        
 	    }
 	    
+	    
+	    
 }

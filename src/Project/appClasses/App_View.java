@@ -153,19 +153,42 @@ public class App_View extends View<App_Model> {
 		    
 		    //zweites Fenster 
 		    
-		    ImageView i = new ImageView ("Profilbild.jpg");
+		    ImageView profilepicture = new ImageView ("Profilbild.jpg");
 		    
 		    Label label2 = new Label("Das ist die zweite Szene!");
-			Button button2 = new Button("Zur ersten Szene wechseln");
-			button2.setOnAction(e -> {
-				stage.setScene(scene);
-				stage.show();
-			}
-);
+		    Label name = new Label ("Name: ");
+			Button back = new Button("Back");
+			Button delete = new Button ("delete");
+		back.setOnAction(e -> {
+			stage.setScene(scene);
+			stage.show();
+		});
+		
+		//linke Seite des zweiten Fensters definieren
+		
+		VBox center = new VBox(30);
+		
+		//HBox mit verschiedenen Buttons definieren
+		
+		HBox bottom = new HBox();
 
-			VBox layout2 = new VBox(10);
-			layout2.getChildren().addAll(label2,i, button2 );
+
+			BorderPane layout2 = new BorderPane();
 			Scene scene2 = new Scene(layout2, 350, 350);
+			
+			
+			layout2.setTop(menuBar);
+			layout2.setCenter(center);
+			layout2.setBottom(bottom);
+			bottom.getChildren().addAll(back, delete);
+			center.getChildren().add(profilepicture);
+			center.getChildren().add(name);
+			center.getChildren().add(new Label("Email: "));
+			center.getChildren().add(new Label("Telephone: "));
+			
+			
+			
+			
 			
 			newViewButton.setOnAction(e -> {
 					stage.setScene(scene2);
