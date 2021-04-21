@@ -28,7 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import junit.framework.Test;
+
 
 /**
  * Copyright 2015, FHNW, Prof. Dr. Brad Richards. All rights reserved. This code
@@ -283,6 +283,10 @@ public class App_View extends View<App_Model> {
 
 			BorderPane layout2 = new BorderPane();
 			Scene scene2 = new Scene(layout2, 350, 350);
+			newViewButton.setOnAction(e -> {
+				stage.setScene(scene2);
+				stage.show();
+		});
 
 			   this.txtEmail.getStyleClass().add("txtContactForm");
 			   this.txtlastName.getStyleClass().add("txtContactForm");
@@ -306,10 +310,7 @@ public class App_View extends View<App_Model> {
 			
 			
 			
-			newViewButton.setOnAction(e -> {
-					stage.setScene(scene2);
-					stage.show();
-			});
+
 			
 			/*
 			 * GridPane root = new GridPane();
