@@ -132,3 +132,11 @@
     -fx-background : rgb(225, 228, 203);
     -fx-spacing: 20;
 }
+
+.PhoneNumberOk {
+  -fx-text-fill: green;
+}
+
+.PhoneNumberNotOk {
+  -fx-text-fill: red;
+}

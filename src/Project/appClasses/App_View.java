@@ -258,6 +258,8 @@ public class App_View extends View<App_Model> {
 			   this.comboGroup.getStyleClass().add("txtContactForm");
 			   this.birthDate.getStyleClass().add("txtBirthDate");
 			   this.txtID.getStyleClass().add("txtID");
+			   
+			
 			
 			   
 			   //adding to behälter
@@ -411,6 +413,8 @@ public class App_View extends View<App_Model> {
 		    										   Group.valueOf(t.getString("program.label.contact.comboBox.value.6")));
 		   */ }
 		   
+		   
+		   
 		   //helper for control
 		   public void disableTextField() {
 				this.txtfirstName.setDisable(true);
@@ -436,6 +440,7 @@ public class App_View extends View<App_Model> {
 				stage.setScene(scene2);
 				stage.show();
 			}
+		   
 		   
 		   public void backBack() {
 				stage.setScene(scene1);

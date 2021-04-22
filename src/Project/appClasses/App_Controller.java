@@ -35,7 +35,15 @@ public class App_Controller extends Controller<App_Model, App_View> {
 	                buttonClick();
 	            }
 	        });
+	       
 	*/
+	        
+	        view.txtNumber.textProperty().addListener(
+					// Parameters of any PropertyChangeListener
+					(observable, oldValue, newValue) -> validateTelephoneNr(newValue));
+	        
+	        view.txtNumber.textProperty().addListener((observable, oldValue, newValue) -> validateTelephoneNr(newValue));
+
 	        // register ourselves to handle window-closing event
 	        view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
 	            @Override
@@ -323,6 +331,50 @@ public class App_Controller extends Controller<App_Model, App_View> {
 
 	        view.lblNumber.setText(newText);        
 	    }
+	    
+	    //Methoden für CSS 
+	    
+	    
+	    
+	    //Methoden für Eingabeprüfung
+	    
+		private void validateTelephoneNr(String newValue) {
+			boolean valid = false;
+
+			int number = Integer.parseInt(newValue);
+
+			if (number >= 1 && istEineZahl(newValue)) {
+				valid = true;
+			} else {
+				valid = false;
+			}
+
+			view.txtNumber.getStyleClass().remove("PhoneNumberNotOk");
+			view.txtNumber.getStyleClass().remove("PhoneNumberOk");
+			if (valid) {
+				view.txtNumber.getStyleClass().add("PhoneNumberok");
+			} else {
+				view.txtNumber.getStyleClass().add("PhoneNumberNotOk");
+			}
+		}
+		
+		public boolean istEineZahl(String eingabe) {
+			// Prüfen ob 'eingabe' eine ganze Zahl ist. Wenn ein Zeichen keine Zahl ist, ist
+			// das Ergebnis 'false'.
+			boolean zahl = true;
+			char[] c;
+			int i;
+
+			eingabe = eingabe.trim();
+			c = eingabe.toCharArray();
+
+			for (i = 0; i < eingabe.length(); i++) {
+				if (!Character.isDigit(c[i])) {
+					zahl = false;
+				}
+			}
+			return zahl;
+		}
 	    
 	    
 	    
