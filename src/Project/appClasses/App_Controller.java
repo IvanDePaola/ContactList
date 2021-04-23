@@ -38,12 +38,14 @@ public class App_Controller extends Controller<App_Model, App_View> {
 	       
 	*/
 	        
-	        view.txtNumber.textProperty().addListener(
-					// Parameters of any PropertyChangeListener
-					(observable, oldValue, newValue) -> validateTelephoneNr(newValue));
 	        
+	        view.txtEmail.textProperty().addListener(
+					// Parameters of any PropertyChangeListener
+					(observable, oldValue, newValue) -> validateEmailAddress(newValue));
+		
 	        view.txtNumber.textProperty().addListener((observable, oldValue, newValue) -> validateTelephoneNr(newValue));
-
+	        view.txtlastName.textProperty().addListener((observable, oldValue, newValue) -> validateLastName(newValue));
+	        view.txtfirstName.textProperty().addListener((observable, oldValue, newValue) -> validateFirstName(newValue));
 	        // register ourselves to handle window-closing event
 	        view.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
 	            @Override
@@ -332,50 +334,105 @@ public class App_Controller extends Controller<App_Model, App_View> {
 	        view.lblNumber.setText(newText);        
 	    }
 	    
-	    //Methoden für CSS 
-	    
-	    
-	    
+
 	    //Methoden für Eingabeprüfung
 	    
 		private void validateTelephoneNr(String newValue) {
 			boolean valid = false;
-
-			int number = Integer.parseInt(newValue);
-
-			if (number >= 1 && istEineZahl(newValue)) {
+			
+			view.txtNumber.getStyleClass().remove("PhoneNumberNotOk");
+			view.txtNumber.getStyleClass().remove("PhoneNumberOk");
+			
+			if (isASwissNumber(newValue)) {
 				valid = true;
 			} else {
 				valid = false;
 			}
-
-			view.txtNumber.getStyleClass().remove("PhoneNumberNotOk");
-			view.txtNumber.getStyleClass().remove("PhoneNumberOk");
+			
 			if (valid) {
-				view.txtNumber.getStyleClass().add("PhoneNumberok");
+				view.txtNumber.getStyleClass().add("PhoneNumberOk");
 			} else {
 				view.txtNumber.getStyleClass().add("PhoneNumberNotOk");
 			}
 		}
 		
-		public boolean istEineZahl(String eingabe) {
-			// Prüfen ob 'eingabe' eine ganze Zahl ist. Wenn ein Zeichen keine Zahl ist, ist
-			// das Ergebnis 'false'.
-			boolean zahl = true;
-			char[] c;
-			int i;
+		 public boolean isASwissNumber(String s){      
+		     String regex="[0-9*#+(), -]{10,33}";      
+		      return s.matches(regex);//returns true if input and regex matches otherwise false;
+		 }
+	    
 
-			eingabe = eingabe.trim();
-			c = eingabe.toCharArray();
+	private void validateEmailAddress(String newValue) {
+		boolean valid = false;
 
-			for (i = 0; i < eingabe.length(); i++) {
-				if (!Character.isDigit(c[i])) {
-					zahl = false;
+		// Split on '@': must give us two not-empty parts
+		String[] addressParts = newValue.split("@");
+		if (addressParts.length == 2 && !addressParts[0].isEmpty() && !addressParts[1].isEmpty()) {
+			// We want to split the domain on '.', but split does not give us an empty
+			// string, if the split-character is the last character in the string. So we
+			// first ensure that the string does not end with '.'
+			if (addressParts[1].charAt(addressParts[1].length() - 1) != '.') {
+				// Split domain on '.': must give us at least two parts.
+				// Each part must be at least two characters long
+				String[] domainParts = addressParts[1].split("\\.");
+				if (domainParts.length >= 2) {
+					valid = true;
+					for (String s : domainParts) {
+						if (s.length() < 2) valid = false;
+					}
 				}
 			}
-			return zahl;
 		}
+
+		view.txtEmail.getStyleClass().remove("emailNotOk");
+		view.txtEmail.getStyleClass().remove("emailOk");
+		if (valid) {
+			view.txtEmail.getStyleClass().add("emailOk");
+		} else {
+			view.txtEmail.getStyleClass().add("emailNotOk");
+		}
+	}
+
+	private void validateFirstName(String newValue) {
+		boolean valid = false;
+		
+		view.txtfirstName.getStyleClass().remove("FirstNameOk");
+		view.txtfirstName.getStyleClass().remove("FirstNameNotOk");
+		
+		if (isValidName(newValue)) {
+			valid = true;
+		} else {
+			valid = false;
+		}
+		
+		if (valid) {
+			view.txtfirstName.getStyleClass().add("FirstNameOk");
+		} else {
+			view.txtfirstName.getStyleClass().add("FirstNameNotOk");
+		}
+	}
+	
+	private void validateLastName(String newValue) {
+		boolean valid = false;
+		
+		view.txtlastName.getStyleClass().remove("LastNameNotOk");
+		view.txtlastName.getStyleClass().remove("LastNameOk");
+		
+		if (isValidName(newValue)) {
+			valid = true;
+		} else {
+			valid = false;
+		}
+		
+		if (valid) {
+			view.txtlastName.getStyleClass().add("LastNameOk");
+		} else {
+			view.txtlastName.getStyleClass().add("LastNameNotOk");
+		}
+	}
 	    
-	    
-	    
+	 public boolean isValidName(String s){      
+	     String regex="[A-Za-zÄÖÜäöüßèéà-]{3,30}";      
+	      return s.matches(regex);//returns true if input and regex matches otherwise false;
+	 }
 }

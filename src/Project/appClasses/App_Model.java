@@ -154,8 +154,8 @@ public class App_Model extends Model {
 	
     //fill list test
     public void fillSet() {
-    	this.contactsTree.add(new Contact( "F", "L", "x.x", Group.Family, 000));
-    	
+    	this.contactsTree.add(new Contact( "false data", "Example for", "x.x", Group.Family, 000));
+    	this.contactsTree.add(new Contact( "Sarikaya", "Hüseyin", "h.sarikaya@gmx.ch", Group.Family, 788515333));
     }
     
     
