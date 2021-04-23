@@ -148,3 +148,19 @@
 .emailNotOk {
   -fx-text-fill: red;
 }
+
+.FirstNameOk {
+  -fx-text-fill: green;
+}
+
+.FirstNameNotOk {
+  -fx-text-fill: red;
+}
+
+.LastNameOk {
+  -fx-text-fill: green;
+}
+
+.LastNameNotOk {
+  -fx-text-fill: red;
+}
