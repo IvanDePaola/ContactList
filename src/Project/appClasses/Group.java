@@ -2,7 +2,7 @@ package Project.appClasses;
 
 public enum Group implements Comparable<Group> {
 
-	Favourites, Family, Work, University, Leisure, Other;
+	Favourites, Favoriten, Family, Familie, Work, Arbeit, University, Universität, Leisure, Freizeit, Other, Sonstige;
 	
 	public boolean contains(String searchString) {
 		return (this.name().contains(searchString));

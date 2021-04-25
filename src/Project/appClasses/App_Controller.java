@@ -357,7 +357,7 @@ public class App_Controller extends Controller<App_Model, App_View> {
 		}
 		
 		 public boolean isASwissNumber(String s){      
-		     String regex="[0-9*#+(), -]{10,33}";      
+		     String regex="[0][0-9*#+()-]{9}";      
 		      return s.matches(regex);//returns true if input and regex matches otherwise false;
 		 }
 	    
@@ -432,7 +432,7 @@ public class App_Controller extends Controller<App_Model, App_View> {
 	}
 	    
 	 public boolean isValidName(String s){      
-	     String regex="[A-Za-zÄÖÜäöüßèéà-]{3,30}";      
+	     String regex="[\\sA-Za-zÄÖÜäöüßèéà-]{3,30}";      
 	      return s.matches(regex);//returns true if input and regex matches otherwise false;
 	 }
 }

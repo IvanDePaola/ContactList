@@ -139,7 +139,7 @@ public class App_View extends View<App_Model> {
 			   this.buttonBar = new HBox();
 			   this.buttonBar.getStyleClass().add("buttonBar");
 			   
-			   this.buttonBar.getChildren().addAll(this.groupButton, this.newButton);
+			   this.buttonBar.getChildren().addAll(this.groupButton, new Label(" "),this.newButton);
 			   
 		
 			   //Searchbar wird definiert
@@ -220,6 +220,7 @@ public class App_View extends View<App_Model> {
 			   this.lblEmail = new Label();
 			   this.lblGroup = new Label();
 			   this.lblNumber = new Label();
+			
 			   
 			   
 			   //CSS for contactView labels
@@ -350,9 +351,9 @@ public class App_View extends View<App_Model> {
 		      
 	        updateTexts();
 			
-	        scene1 = new Scene(root, 450, 750);
-	        scene2 = new Scene(contactView, 450, 750);
-	        scene3 = new Scene(groupView, 450, 750);
+	        scene1 = new Scene(root, 435, 550);
+	        scene2 = new Scene(contactView, 435, 550);
+	        scene3 = new Scene(groupView, 420, 550);
 	        scene1.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
 	        scene2.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
 	        scene3.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
